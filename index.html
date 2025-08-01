@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng Học Tập </title>
+    <link rel="icon" type="image/png" href="Coffee Break.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 min-h-screen font-sans">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="Coffee Break.png" alt="Biểu tượng cổng học tập" class="w-10 h-10 rounded-full mr-3 object-cover hover:scale-110 transition-transform">
+                    <h1>CỔNG HỌC TẬP </h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm sm:text-base hidden md:block">
+                        <span id="current-date" class="mr-4 font-medium"></span>
+                        <span id="current-time" class="font-medium bg-indigo-900 px-2 py-1 rounded"></span>
+                    </div>
+                    <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-indigo-700 py-4">
+                <div class="flex flex-col space-y-2 text-center">
+                    <span id="mobile-current-date" class="text-sm font-medium"></span>
+                    <span id="mobile-current-time" class="text-sm font-medium bg-indigo-900 px-2 py-1 rounded inline-block"></span>
+                    <div class="flex flex-col space-y-2 mt-4">
+                        <button class="tab-btn py-2 px-4 font-medium text-white hover:bg-indigo-600 rounded" data-tab="subjects">
+                            <i class="fas fa-book mr-2"></i>Môn Học
+                        </button>
+                        <button class="tab-btn py-2 px-4 font-medium text-white hover:bg-indigo-600 rounded" data-tab="quiz">
+                            <i class="fas fa-gamepad mr-2"></i>Trắc Nghiệm
+                        </button>
+                        <button class="tab-btn py-2 px-4 font-medium text-white hover:bg-indigo-600 rounded" data-tab="formulas">
+                            <i class="fas fa-flask mr-2"></i>Công Thức
+                        </button>
+                        <button class="tab-btn py-2 px-4 font-medium text-white hover:bg-indigo-600 rounded" data-tab="stats">
+                            <i class="fas fa-chart-line mr-2"></i>Thống Kê
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Navigation Tabs (Desktop) -->
+        <div class="hidden md:flex border-b border-gray-200 mb-8 overflow-x-auto">
+            <button class="tab-btn py-3 px-6 font-medium text-gray-500 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-600 transition-all whitespace-nowrap" data-tab="subjects">
+                <i class="fas fa-book mr-2"></i>Môn Học
+            </button>
+            <button class="tab-btn py-3 px-6 font-medium text-gray-500 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-600 transition-all whitespace-nowrap" data-tab="quiz">
+                <i class="fas fa-gamepad mr-2"></i>Trắc Nghiệm
+            </button>
+            <button class="tab-btn py-3 px-6 font-medium text-gray-500 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-600 transition-all whitespace-nowrap" data-tab="formulas">
+                <i class="fas fa-flask mr-2"></i>Công Thức
+            </button>
+            <button class="tab-btn py-3 px-6 font-medium text-gray-500 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-600 transition-all whitespace-nowrap" data-tab="stats">
+                <i class="fas fa-chart-line mr-2"></i>Thống Kê
+            </button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div class="tab-content active" id="subjects-tab">
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8 transform hover:scale-[1.02] transition-transform">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Quản Lý Môn Học</h2>
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <input type="text" id="subject-name" placeholder="Tên môn học" class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <button id="add-subject" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>Thêm Môn
+                    </button>
+                </div>
+                <div id="subjects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 transform hover:scale-[1.02] transition-transform">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Cập Nhật Tiến Độ</h2>
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <select id="progress-subject" class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">-- Chọn môn học --</option>
+                    </select>
+                    <input type="number" id="progress-value" min="0" max="100" placeholder="Tiến độ %" class="w-24 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <button id="update-progress" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                        <i class="fas fa-sync-alt mr-2"></i>Cập Nhật
+                    </button>
+                </div>
+                <div class="mt-4">
+                    <p class="text-sm font-medium text-gray-700 mb-1">Tổng tiến độ học tập</p>
+                    <div class="w-full bg-gray-200 rounded-full h-4">
+                        <div id="overall-progress" class="bg-indigo-600 h-4 rounded-full progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div class="tab-content" id="quiz-tab">
+            <div class="bg-white rounded-xl shadow-lg p-6 transform hover:scale-[1.02] transition-transform">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Ôn Tập Trắc Nghiệm</h2>
+                <div id="quiz-setup" class="mb-6">
+                    <div class="flex flex-col md:flex-row gap-4 mb-4">
+                        <select id="quiz-category" class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="">-- Chọn chủ đề --</option>
+                            <option value="math">Toán học</option>
+                            <option value="physics">Vật lý</option>
+                            <option value="chemistry">Hóa học</option>
+                            <option value="biology">Sinh học</option>
+                            <option value="history">Lịch sử</option>
+                        </select>
+                        <input type="number" id="quiz-count" min="1" max="20" value="5" placeholder="Số câu" class="w-24 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <button id="start-quiz" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                            <i class="fas fa-play mr-2"></i>Bắt Đầu
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-500">Chọn chủ đề và số lượng câu hỏi để bắt đầu bài trắc nghiệm.</p>
+                </div>
+                <div id="quiz-container" class="hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <span id="quiz-progress" class="font-medium text-gray-700">Câu 1/5</span>
+                        <span id="quiz-timer" class="font-medium text-gray-700">02:00</span>
+                        <span id="quiz-score" class="font-medium text-gray-700">Điểm: 0</span>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg mb-4">
+                        <p id="quiz-question" class="text-lg font-medium mb-4">Câu hỏi sẽ hiển thị ở đây</p>
+                        <div id="quiz-options" class="grid grid-cols-1 gap-2"></div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button id="quiz-prev" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors hidden">
+                            <i class="fas fa-arrow-left mr-2"></i>Câu trước
+                        </button>
+                        <button id="quiz-next" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors ml-auto">
+                            Câu tiếp <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="quiz-results" class="hidden">
+                    <div class="bg-gray-50 p-6 rounded-lg text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Kết Quả Trắc Nghiệm</h3>
+                        <p class="text-lg mb-4">Bạn đã trả lời đúng <span id="correct-answers" class="font-bold text-indigo-600">0</span>/<span id="total-questions" class="font-bold">0</span> câu hỏi</p>
+                        <p class="text-lg mb-6">Điểm số: <span id="final-score" class="font-bold text-indigo-600">0</span>/100</p>
+                        <button id="quiz-restart" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                            <i class="fas fa-redo mr-2"></i>Làm Lại
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulas Tab -->
+        <div class="tab-content" id="formulas-tab">
+            <div class="bg-white rounded-xl shadow-lg p-6 transform hover:scale-[1.02] transition-transform">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Quản Lý Công Thức Học Tập</h2>
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <div class="flex-grow">
+                        <input type="text" id="formula-search" placeholder="Tìm kiếm công thức..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <button id="add-formula-btn" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>Thêm Công Thức
+                    </button>
+                </div>
+                <div id="formula-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Thêm Công Thức Mới</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="formula-title" class="block text-sm font-medium text-gray-700 mb-1">Tiêu đề</label>
+                                <input type="text" id="formula-title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                            <div>
+                                <label for="formula-subject" class="block text-sm font-medium text-gray-700 mb-1">Môn học</label>
+                                <select id="formula-subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                    <option value="">-- Chọn môn học --</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="formula-content" class="block text-sm font-medium text-gray-700 mb-1">Nội dung</label>
+                                <textarea id="formula-content" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                            </div>
+                            <div class="flex justify-end space-x-3 pt-2">
+                                <button id="cancel-formula" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                                    Hủy
+                                </button>
+                                <button id="save-formula" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                                    Lưu
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="formulas-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+        </div>
+
+        <!-- Stats Tab -->
+        <div class="tab-content" id="stats-tab">
+            <div class="bg-white rounded-xl shadow-lg p-6 transform hover:scale-[1.02] transition-transform">
+                <h2 class="text-xl font-bold text-gray-800 mb-6">Thống Kê Học Tập</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Tiến Độ Các Môn Học</h3>
+                        <div id="subject-progress-chart" class="space-y-3"></div>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Lịch Sử Trắc Nghiệm</h3>
+                        <div id="quiz-history-chart" class="h-64 flex items-center justify-center">
+                            <p class="text-gray-500">Dữ liệu biểu đồ sẽ hiển thị ở đây</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Công Thức Gần Đây</h3>
+                    <div id="recent-formulas" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2"> <span id="current-year"></span> Cổng Học Tập</p>
+            <p class="text-gray-400 text-sm">Hệ thống quản lý và hỗ trợ học tập toàn diện </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

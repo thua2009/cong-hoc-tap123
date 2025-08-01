@@ -1,0 +1,46 @@
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.progress-bar {
+    transition: width 0.5s ease-in-out;
+}
+#quiz-container .option {
+    transition: all 0.3s ease;
+}
+#quiz-container .option:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+header {
+    transition: all 0.3s ease;
+}
+header img {
+    transition: transform 0.2s ease;
+}
+@media (max-width: 640px) {
+    header h1 {
+        font-size: 1.25rem;
+    }
+    header img {
+        width: 32px;
+        height: 32px;
+    }
+}
+#mobile-menu {
+    transition: all 0.3s ease;
+}
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
